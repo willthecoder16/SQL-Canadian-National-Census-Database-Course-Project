@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>National Census Database</title>
+  </head>
+  <body>
+    <!-- ===================================================================================== -->
+    <!-- Display the current status of the database connection. 
+         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+         -->
+    <h1>
+      National Census Database:
+      <!-- An in-line placeholder to display connection status. -->
+      <span id="dbStatus"> </span>
+      <!-- A loading GIF, will be hided once get the status. -->
+      <img
+        id="loadingGif"
+        class="loading-gif"
+        src="loading_100px.gif"
+        alt="Loading..."
+      />
+    </h1>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+
+    <h2>Insert Individual (Insert)</h2>
+    <form id="insertIndividual">
+      Individual name:
+      <input class="aks-input" type="text" id="name" placeholder="Enter Name" required />
+      <br /><br />
+      Gender:
+      <input
+        class="aks-input"
+        type="text"
+        id="gender"
+        placeholder="Enter Gender"
+        maxlength="20"
+      />
+      <br /><br />
+      Age: <input class="aks-input" type="number" id="age" placeholder="Enter age" required />
+      <br /><br />
+      SIN: <input class="aks-input" type="number" id="sin" placeholder="Enter sin"
+      maxlength="9" required />
+      <br /><br />
+      Income:
+      <input class="aks-input" type="number" id="income" placeholder="Enter income" required />
+      <br /><br />
+      Address:
+      <input class="aks-input" type="text" id="address" placeholder="Enter address" required />
+      <br /><br />
+      Postal Code:
+      <input
+        class="aks-input"
+        type="text"
+        id="postalCode"
+        placeholder="Enter postal code"
+        maxlength="6"
+        required
+      />
+      <br /><br />
+      Occupation ID:
+      <input
+        class="aks-input"
+        type="number"
+        id="occupationID"
+        placeholder="Enter Occupation ID"
+        required
+      />
+      <br /><br />
+      Education ID:
+      <input
+        class="aks-input"
+        type="number"
+        id="educationID"
+        placeholder="Enter education ID"
+        required
+      />
+      <br /><br />
+      Status ID:
+      <input
+        class="aks-input"
+        type="number"
+        id="statusID"
+        placeholder="Enter Status ID"
+        required
+      />
+      <br /><br />
+
+      <button class="button-61" type="submit">Insert Individual</button> <br />
+    </form>
+    <div id="insertResultMsg"></div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Delete Household (Delete)</h2>
+    <form id="deleteIndividual">
+      Address:
+      <input
+        class="aks-input"
+        type="text"
+        id="deleteAddress"
+        placeholder="Enter Address"
+        required
+      />
+      <br /><br />
+      Postal Code:
+      <input
+        class="aks-input"
+        type="text"
+        id="deletePostalCode"
+        placeholder="Enter Postal Code"
+        maxlength="6"
+      />
+      <br /><br />
+
+      <button class="button-61" type="submit">Delete Household</button> <br />
+    </form>
+    <div id="deleteResultMsg"></div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+
+    <h2>Update Address or Postal Code of Individual (Update)</h2>
+
+    <form id="updateAddressPostalCode">
+      <label>SIN:</label>
+      <input
+        class="aks-input"
+        type="number"
+        id="updateSin"
+        placeholder="Enter SIN"
+        maxlength="9"
+      /><br /><br />
+
+      <input
+        class="aks-input"
+        type="radio"
+        id="choiceAddress"
+        name="updateChoice"
+        value="address"
+      />
+      <label for="choiceAddress">New Address</label><br />
+
+      <input
+        class="aks-input"
+        type="radio"
+        id="choicePostalCode"
+        name="updateChoice"
+        value="postalCode"
+        maxlength="6"
+      />
+      <label for="choicePostalCode">New Postal Code</label><br /><br />
+
+      <div id="updateField"></div>
+
+      <button class="button-61" type="submit">Update Household</button><br />
+    </form>
+    <!-- A placeholder to display messages related to the update operation. -->
+    <div id="updateNameResultMsg"></div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Search Individual by Gender and Income (Selection)</h2>
+    <form id="getIndividualForm">
+      <label for="getGender">Gender:</label>
+      <select class="aks-input" id="getGender" name="gender" required>
+        <option value="M">Male</option>
+        <option value="F">Female</option></select
+      ><br /><br />
+
+      <label for="getIncome">Minimum Income:</label>
+      <input class="aks-input" type="number" id="getIncome" name="income" required /><br /><br />
+
+      <button class="button-61" type="submit">Search</button>
+    </form>
+
+    <h2>Results</h2>
+    <div class="conatiner">
+    <table id="resultsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>SIN</th>
+          <th>Income</th>
+          <th>Address</th>
+          <th>Postal Code</th>
+          <th>Occupation ID</th>
+          <th>Education ID</th>
+          <th>Status ID</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Individuals' Addresses and Names (Projection)</h2>
+    <button class="button-61" id="loadButton">Load Individuals</button>
+    <div class="container">
+    <table id="individualsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Postal Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Search Individuals by City (Join)</h2>
+    <form id="joinForm">
+      <label for="joinCityName">City Name:</label>
+      <input class="aks-input" type="text" id="joinCityName" required /><br /><br />
+
+      <button class="button-61" type="submit">Search</button>
+    </form>
+
+    <h2>Results</h2>
+    <div class="container">
+    <table id="joinResultsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Postal Code</th>
+          <th>City Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Average Income by Education (Aggregation)</h2>
+    <button class="button-61" id="loadButtonAggregation">Load Individuals</button>
+    <table id="individualsTableAggregation">
+      <thead>
+        <tr>
+          <th>Level Name</th>
+          <th>Average Income</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>Occupation having greater average income (Aggregation with Having)</h2>
+    <form id="aggregationViaForm">
+      <label for="aggregationAverageIncome">Income</label>
+      <input class="aks-input" type="number" id="aggregationAverageIncome" required /><br /><br />
+
+      <button class="button-61" type="submit">Search</button>
+    </form>
+
+    <h2>Results</h2>
+    <table id="havingResultsTable">
+      <thead>
+        <tr>
+          <th>Occupation</th>
+          <th>Average Income</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+    <h2>City with higher average income (Nested Aggregation)</h2>
+    <form id="nestedAggregation">
+      <label for="nestedAggregationInput">Income</label>
+      <input class="aks-input" type="number" id="nestedAggregationInput" required /><br /><br />
+
+      <button class="button-61" type="submit">Search</button>
+    </form>
+
+    <h2>Results</h2>
+    <table id="nestedResultsTable">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Average Income</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+
+    <h2>Individuals' with Every Skill (Division)</h2>
+    <button class="button-61" id="divisionLoadButton">Load</button>
+    <table id="divisonTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <!-- ========================================================================= -->
+
+    <!-- ===================================================================================== -->
+    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+    <script src="scripts.js"></script>
+  </body>
+</html>
